@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="env_extractor",
+    name="extractenv",
     version="0.1",
     packages=find_packages(),  # This will find all packages (including env_extractor)
     install_requires=[
@@ -9,7 +9,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'env-extractor = env_extractor.main:main',  # Point to the main.py in the root
+            'extractenv = env_extractor.main:main',  # Point to the main.py in the root
         ],
     },
     author="Sharan",
