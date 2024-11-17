@@ -1,5 +1,5 @@
 from env_extractor.parser import ArgumentParser
-from env_extractor.extractor import EnvVariableExtractor
+from env_extractor.envloader import EnvVariableExtractor
 from env_extractor.utils import Utils
 
 def main():

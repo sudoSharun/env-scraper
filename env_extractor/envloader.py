@@ -1,7 +1,12 @@
 import ast
+import json
+from env_extractor.file_handler import FileHandler
 
 class EnvVariableExtractor(ast.NodeVisitor):
-    def __init__(self):
+    def __init__(self, env_files, output_format, output_file):
+        self.env_files = env_files
+        self.output_format = output_format
+        self.output_file = output_file or ".env"
         self.env_vars = {}  # To store environment variable names and types
 
     def visit_Call(self, node):
@@ -65,12 +70,21 @@ class EnvVariableExtractor(ast.NodeVisitor):
 
         return env_name, env_type
 
+    def extract_and_save(self):
+        all_env_vars = {}
+        for env_file in self.env_files:
+            env_vars = extract_env_variables_from_file(env_file)
+            all_env_vars.update(env_vars)
+
+        if self.output_format == 'json':
+            FileHandler.save_as_json(all_env_vars, self.output_file)
+        elif self.output_format == 'env':
+            FileHandler.save_as_env(all_env_vars, self.output_file)
+
 
 def extract_env_variables_from_file(file_path):
     with open(file_path, "r") as file:
         tree = ast.parse(file.read(), filename=file_path)
-    extractor = EnvVariableExtractor()
+    extractor = EnvVariableExtractor([], None, None)  # Instantiate with dummy args
     extractor.visit(tree)
     return extractor.env_vars
-
-
