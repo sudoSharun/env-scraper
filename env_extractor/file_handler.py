@@ -1,7 +1,6 @@
 import json
 
 class FileHandler:
-class FileHandler:
     @staticmethod
     def save_as_env(env_vars, output_file):
         # Read existing content if the file exists
